@@ -11,3 +11,5 @@
 ### Описание проекта
 В данном проекте анализируются новости с сайта [Lenta.ru](https://www.kaggle.com/datasets/yutkin/corpus-of-russian-news-articles-from-lenta?resource=download) при помощи различных методов машинного и глубинного обучения на текстовых данных.
 
+
+[Датасет](https://drive.google.com/file/d/1rIfaOvLXQIOfTXQn-QUwNAijECpOmN1j/view?usp=share_link)
