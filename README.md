@@ -13,3 +13,5 @@
 
 
 [Датасет](https://drive.google.com/file/d/1rIfaOvLXQIOfTXQn-QUwNAijECpOmN1j/view?usp=share_link)
+
+[Новый датасет до 2022](https://drive.google.com/file/d/1SedvQxHfArNCejsK19TFIirngE3Vdi3H/view?usp=share_link)
