@@ -15,3 +15,8 @@
 [Датасет](https://drive.google.com/file/d/1rIfaOvLXQIOfTXQn-QUwNAijECpOmN1j/view?usp=share_link)
 
 [Новый датасет до 2022](https://drive.google.com/file/d/1SedvQxHfArNCejsK19TFIirngE3Vdi3H/view?usp=share_link)
+
+[Датасет с обработкой pymorphy2](https://drive.google.com/file/d/1RI1pSHTxX7SyZ6ypKGkrHM-HfGsndXrr/view?usp=share_link)
+[Отдельно столбец новостей с обработкой pymorphy2](https://drive.google.com/file/d/1zRFgV2GTMEpLORoy9pEpBzBsl1vBoghk/view?usp=share_link)
+
+[Датасет с обработкой pymystem3](https://drive.google.com/file/d/1AhR-4Rq70UGzHPvyzNIfqlqlc8yr2mDO/view)
