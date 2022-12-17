@@ -19,4 +19,4 @@
 [Датасет с обработкой pymorphy2](https://drive.google.com/file/d/1RI1pSHTxX7SyZ6ypKGkrHM-HfGsndXrr/view?usp=share_link)  
 [Отдельно столбец новостей с обработкой pymorphy2](https://drive.google.com/file/d/1zRFgV2GTMEpLORoy9pEpBzBsl1vBoghk/view?usp=share_link)
 
-[Датасет с обработкой pymystem3](https://drive.google.com/file/d/1AhR-4Rq70UGzHPvyzNIfqlqlc8yr2mDO/view)
+[Датасет с обработкой pymystem3](https://drive.google.com/file/d/15eUU2kvFs4ZkbX6wbuT55UfYSQfpRR5L/view?usp=sharing)
