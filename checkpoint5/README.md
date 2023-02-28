@@ -1,4 +1,5 @@
 Ссылка на pickle файлы: https://drive.google.com/drive/folders/1XDn1f6sMOvb_X2Yv93xFN2OFoqm1ylZB?usp=share_link
+Ссылка на датасет: https://drive.google.com/file/d/1Z32axT_xJUG-VesZiZ4dBVOL2Apafu3e/view?usp=share_link
 
 Содержание папки:
  - Попытки улучшения модели catboost:
