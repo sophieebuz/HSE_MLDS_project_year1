@@ -8,7 +8,7 @@
 
     - [Logistic Regression](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/main/checkpoint4/ML_models_logreg.ipynb)
     - [Random Forest](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/main/checkpoint4/ML_models_random_forest.ipynb)
-    - [Catboost](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/main/checkpoint4/ML_models_catboost_experiments.ipynb)
+    - [Catboost](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/main/checkpoint4/ML_models_catboost_fulldf.ipynb)
 
 ## Результаты
 
