@@ -4,8 +4,8 @@
 https://www.kaggle.com/datasets/yutkin/corpus-of-russian-news-articles-from-lenta?resource=download
 
 ### Параметры:  
- -	Период: сентябрь 1999 - ноябрь 2022  
- -	Количество новостей: 1.100K+
+ -	Период: сентябрь 1999 - декабрь 2019  
+ -	Количество новостей: 800K+
 
 ### Признаки:
 - адрес url
