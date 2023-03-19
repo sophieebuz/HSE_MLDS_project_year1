@@ -1,13 +1,14 @@
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 
-def encoder(df):
+def encoder(df: pd.DataFrame):
     le = LabelEncoder()
     l_enc = le.fit(df.topic)
     df["topic_le"] = l_enc.transform(df.topic)
 
 
-def make_date_features(df):
+def make_date_features(df: pd.DataFrame):
     df.drop("Unnamed: 0", axis=1, inplace=True)
 
     df["year"] = df["date"].dt.year

@@ -1,8 +1,9 @@
 from catboost import CatBoostClassifier
+import pandas as pd
 import pickle
 
 
-def train_model(X, y):
+def train_model(X: pd.DataFrame, y: pd.DataFrame) -> CatBoostClassifier:
     """
     Функция обучает
     X - матрица "объект-признак"
@@ -26,14 +27,13 @@ def train_model(X, y):
     return model
 
 
-def load_model():
+def load_model(pickle_file: str = "pickle_model_catboost_final_gpu90%.pkl"):
     """
     Функция загружает модель из pickle файла
     """
 
     columns = ['text_str', 'title_lemmas', 'date_enc', 'year', 'season',
                'day_of_week']
-    pkl_filename = "pickle_model_catboost_final_gpu90%.pkl"
-    with open(pkl_filename, 'rb') as file:
+    with open(pickle_file, 'rb') as file:
         model = pickle.load(file)
     return model, columns
