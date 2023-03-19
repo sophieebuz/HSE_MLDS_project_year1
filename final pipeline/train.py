@@ -2,7 +2,7 @@ import pandas as pd
 
 from feature_engineering import encoder, make_date_features
 from lemmatization import lemmatization
-from model import train_model
+from model import save_model, train_model
 
 
 def clean_train_data(df):
@@ -17,13 +17,14 @@ def clean_train_data(df):
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("train.csv")
+    df = pd.read_csv("./data/train_200k.csv")
 
     df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
     df = clean_train_data(df)
 
     lemmatization(df)
-    encoder(df)
+    label_encoder = encoder(df)
     make_date_features(df)
 
-    clf = train_model(df, df['topic_le'])
+    clf = train_model(df, df["topic_le"])
+    save_model("./data/catboost.pkl", clf, label_encoder)

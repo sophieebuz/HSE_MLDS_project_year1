@@ -1,6 +1,6 @@
 import nltk
-from nltk.corpus import stopwords
 import pandas as pd
+from nltk.corpus import stopwords
 from pandarallel import pandarallel
 from pymystem3 import Mystem
 

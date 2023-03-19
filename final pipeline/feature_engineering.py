@@ -1,16 +1,19 @@
+import typing
+
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 
-def encoder(df: pd.DataFrame):
-    le = LabelEncoder()
-    l_enc = le.fit(df.topic)
-    df["topic_le"] = l_enc.transform(df.topic)
+def encoder(df: pd.DataFrame, le: typing.Optional[LabelEncoder] = None) -> LabelEncoder:
+    if not le:
+        le = LabelEncoder()
+        le = le.fit(df.topic)
+    df["topic_le"] = le.transform(df.topic)
+    return le
 
 
 def make_date_features(df: pd.DataFrame):
-    df.drop("Unnamed: 0", axis=1, inplace=True)
-
+    # df.drop("Unnamed: 0", axis=1, inplace=True)
     df["year"] = df["date"].dt.year
     df["month"] = df["date"].dt.month
     df["day"] = df["date"].dt.day

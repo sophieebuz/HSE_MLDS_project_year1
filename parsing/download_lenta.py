@@ -163,10 +163,10 @@ class LentaParser:
         # Get news URLs from raw html
         loop = asyncio.get_running_loop()
         news_urls = await loop.run_in_executor(
-            self._executor, 
-            self._extract_urls_from_html, 
-            self._endpoint, 
-            self._ignored_news_prefixes, 
+            self._executor,
+            self._extract_urls_from_html,
+            self._endpoint,
+            self._ignored_news_prefixes,
             html
         )
 

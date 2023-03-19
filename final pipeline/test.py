@@ -1,15 +1,25 @@
 import pandas as pd
+from sklearn.metrics import classification_report, f1_score
 
-from feature_engineering import make_date_features
+from feature_engineering import encoder, make_date_features
 from lemmatization import lemmatization
-from model import load_model
+from model import COLUMNS, load_model
 
 if __name__ == "__main__":
-    df = pd.read_csv("test.csv")
+    df = pd.read_csv("./data/test_50k.csv")
 
     df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
     lemmatization(df)
     make_date_features(df)
 
-    clf, cols = load_model()
-    y_pred = clf.predict(df[cols])
+    clf, label_encoder = load_model("./data/catboost.pkl")
+    y_pred = clf.predict(df[COLUMNS])
+
+    encoder(df, label_encoder)
+
+    dict_topic = dict(zip(df.topic, df.topic_le))
+    dict_topic = dict(sorted(dict_topic.items(), key=lambda item: item[1]))
+    print(classification_report(df["topic_le"], y_pred, target_names=dict_topic, zero_division=0))
+
+    total_score = f1_score(df["topic_le"], y_pred.ravel(), average="weighted", zero_division=0)
+    print(f"Total score: {total_score}")
