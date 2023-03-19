@@ -27,4 +27,3 @@ if __name__ == "__main__":
     make_date_features(df)
 
     clf = train_model(df, df['topic_le'])
-
