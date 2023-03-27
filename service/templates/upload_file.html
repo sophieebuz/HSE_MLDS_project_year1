@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Upload file</title>
+        </head>
+        <body>
+        <h1> Загрузите файл для получения предсказания </h1>
+            <form action="/prediction" method="post" enctype="multipart/form-data">
+                Прикрепите csv файл: <br>
+                <input type="file" name="uploaded_file" accept="text/csv"> <br><br>
+                <button type="submit">Отправить</button>
+            </form>
+
+        </body>
+    </html>

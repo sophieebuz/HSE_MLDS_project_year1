@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Prediction</title>
+            <!--<link rel="stylesheet" href=" {{ url_for('static', path='style_prediction.css') }} ">-->
+        </head>
+        <body>
+
+            <h1> Предсказание </h1>
+            <ol>
+                {% for i in num %}
+                <li>
+                    {% if i == 0 %}
+                    <img src="data:image/png;base64, {{picture}}" width=720px height=576px align=right style="margin: 5px 480px auto 7px">
+                    {% endif %}
+                    <a href="{{ '/analyse_text?pr=' +i|string +'&name=' +csv_name }}" target="_blank">
+                        {{ pred[i] }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ol>
+
+        </body>
+    </html>

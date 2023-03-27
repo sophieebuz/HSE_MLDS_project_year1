@@ -1,0 +1,12 @@
+catboost
+fastapi
+uvicorn[standart]
+jinja2
+pandas
+scikit-learn
+nltk
+pymystem3
+pandarallel
+wordcloud
+python-multipart
+seaborn
