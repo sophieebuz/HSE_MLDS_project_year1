@@ -109,7 +109,7 @@ def count_topics(topics):
     axes.bar_label(axes.containers[0], size=13, padding=10)
     print("ok2")
     pngImage = io.BytesIO()
-    fig.savefig(pngImage, bbox_inches='tight', dpi=50)
+    fig.savefig(pngImage, bbox_inches='tight', dpi=1200)
     print("ok3")
     pngImageb64String = base64.b64encode(pngImage.getvalue()).decode('ascii')
     print("ok4")
