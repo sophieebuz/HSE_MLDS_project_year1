@@ -2,7 +2,7 @@
     <html>
         <head>
             <title>Analyse text</title>
-            <link rel="stylesheet" href=" {{ url_for('static', path='style_analyse_text.css') }} ">
+            <link rel="stylesheet" href=" {{ url_for('static', path='analyse_text.css') }} ">
         </head>
         <body>
         <h3> Заголовок </h3>
@@ -16,8 +16,8 @@
         <h3> Текст новости </h3>
             <p> {{ text }} </p>
         <p class="aligncenter">
-            <img src="data:image/png;base64, {{wcloud}}" width=640px height=480px>
-            <img src="data:image/png;base64, {{picture}}" width=640px height=480px>
+            <img src="data:image/png;base64, {{wcloud}}" class="pict1" >
+            <img src="data:image/png;base64, {{picture}}" class="pict2" >
         </p>
         </body>
     </html>

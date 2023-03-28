@@ -2,7 +2,8 @@
     <html>
         <head>
             <title>Main page!</title>
-            <link rel="stylesheet" href=" {{ url_for('static', path='style_main_page.css') }} ">
+            <link rel="stylesheet" href=" {{ url_for('static', path='main_page.css') }} ">
+            <!--<link rel="stylesheet" href=" {{ url_for('static', path='test.css') }} ">-->
         </head>
         <body>
             <h1>
@@ -10,14 +11,14 @@
                 и тематическое моделирование
             </h1>
             <div>
-                <a class="a_1" href="/upload_file"> перейти к загрузке файла </a>
+                <a href="/upload_file"> перейти к загрузке файла </a>
             </div>
-            <p style="font-size:20px">
+            <p class="textstyle">
                 Сайт предназначен для тематического моделирования. На основе загруженного текста модель предскажет,
                 к какой теме скорее всего <br>
                 относится данный текст и покажет сведения о загруженном тексте
             </p>
-            <p class="textstyle" style="font-style: italic">
+            <p class="text2style">
                 Примечание: <br>
                 Тематическое моделирование — способ построения модели коллекции текстовых документов,
                 которая определяет, к каким темам относится каждый из документов.
