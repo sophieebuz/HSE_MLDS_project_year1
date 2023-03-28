@@ -7,11 +7,16 @@
         <body>
 
             <h1> Предсказание </h1>
+            <p style="font-size:20px">
+                Тема из списка, к которой конкретный текст был отнесен моделью<br>
+                Для получения более детального описания текста нажмите на предсказанную тему,
+                соответствующую номеру текста
+            </p>
             <ol>
                 {% for i in num %}
                 <li>
                     {% if i == 0 %}
-                    <img src="data:image/png;base64, {{picture}}" width=720px height=576px align=right style="margin: 5px 480px auto 7px">
+                    <img src="data:image/png;base64, {{picture}}" width=720px height=576px align=right style="margin: 5px 400px auto 7px">
                     {% endif %}
                     <a href="{{ '/analyse_text?pr=' +i|string +'&name=' +csv_name }}" target="_blank">
                         {{ pred[i] }}

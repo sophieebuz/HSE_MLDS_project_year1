@@ -95,7 +95,6 @@ def count_topics(topics):
     y = [topic_dict[i][0] for i in range(len(topic_dict))]
     x = [topic_dict[i][1] for i in range(len(topic_dict))]
 
-    print("ok1")
     fig, axes = plt.subplots(ncols=1, figsize=(12, 8), dpi=1200)
     #fig.set_size_inches(640, 480)
     plt.tight_layout()
@@ -107,11 +106,8 @@ def count_topics(topics):
     axes.tick_params(axis='y', labelsize=17)
     axes.set_title('Популярные темы', fontsize=20)
     axes.bar_label(axes.containers[0], size=13, padding=10)
-    print("ok2")
     pngImage = io.BytesIO()
     fig.savefig(pngImage, bbox_inches='tight', dpi=1200)
-    print("ok3")
     pngImageb64String = base64.b64encode(pngImage.getvalue()).decode('ascii')
-    print("ok4")
 
     return pngImageb64String

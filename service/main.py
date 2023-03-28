@@ -1,5 +1,5 @@
 import pandas as pd
-from fastapi import FastAPI, Request, File, UploadFile
+from fastapi import FastAPI, Request, File, UploadFile, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from test import doing_test
@@ -32,10 +32,14 @@ async def create_pred(request: Request,
     with open(file_path, mode='wb+') as f:
         f.write(uploaded_file.file.read())
 
-    y_pred, num = doing_test(file_path)
-    print("ok")
+    try:
+        y_pred, num = doing_test(file_path)
+    except NameError as exception:
+        raise HTTPException(status_code=404, detail=str(exception))
+    except ValueError:
+        raise HTTPException(status_code=404, detail="Что то пошло не так. Проверьте соответствие формата входного файла. Попробуйте снова...")
+
     picture = count_topics(y_pred)
-    print("ok5")
 
     return templates.TemplateResponse('prediction.html',
                                       {"request": request,

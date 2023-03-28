@@ -1,7 +1,7 @@
 import nltk
 import pandas as pd
 from nltk.corpus import stopwords
-from pandarallel import pandarallel
+#from pandarallel import pandarallel
 from pymystem3 import Mystem
 nltk.download("stopwords")
 
@@ -35,5 +35,5 @@ def lemmatization(df: pd.DataFrame):
     df['text_str'] = lemmas_text
     df['title_lemmas'] = lemmas_title
 
-    # df['text_str'] = df["text"].parallel_apply(make_lemmas, args=[mystem_instance])
-    # df['title_lemmas'] = df["title"].parallel_apply(make_lemmas, args=[mystem_instance])
+    #df['text_str'] = df["text"].parallel_apply(make_lemmas, args=[mystem_instance])
+    #df['title_lemmas'] = df["title"].parallel_apply(make_lemmas, args=[mystem_instance])
