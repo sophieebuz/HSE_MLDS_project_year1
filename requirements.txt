@@ -1,12 +1,12 @@
-catboost
 fastapi
 uvicorn[standart]
 jinja2
 pandas
 scikit-learn
 nltk
-pymystem3
-pandarallel
 wordcloud
 python-multipart
 seaborn
+catboost==1.1.1
+pandarallel==1.6.4
+pymystem3==0.2.0
