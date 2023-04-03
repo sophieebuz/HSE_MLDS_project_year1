@@ -10,6 +10,18 @@ install_dependencies:
 	pip install -r requirements.txt
 
 run_service:
-	cd service && uvicorn main:app --reload
+	cd service && uvicorn main:app --host 0.0.0.0 --reload
+
+docker_build:
+	docker stop mlds_project_container
+	docker rm mlds_project_container
+	docker build -t mlds_project .
+	docker create --name mlds_project_container -p 8000:8000 mlds_project
+
+docker_run:
+	docker start mlds_project_container
+
+docker_stop:
+	docker stop mlds_project_container
 
 init: install_dependencies download_data
