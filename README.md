@@ -28,3 +28,9 @@ make init
 python final_pipeline/train.py
 python final_pipeline/test.py
 ```
+
+### Запуск web-сервиса
+```
+make init
+make run_service
+```
