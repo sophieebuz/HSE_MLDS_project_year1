@@ -13,9 +13,8 @@ if __name__ == "__main__":
     make_date_features(df)
 
     clf, label_encoder = load_model("./data/catboost.pkl")
-    y_pred = clf.predict(df[COLUMNS])
-
     encoder(df, label_encoder)
+    y_pred = clf.predict(df[COLUMNS])
 
     dict_topic = dict(zip(df.topic, df.topic_le))
     dict_topic = dict(sorted(dict_topic.items(), key=lambda item: item[1]))

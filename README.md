@@ -24,8 +24,7 @@
 
 ### Запуск  проекта
 ```
-cd './final pipeline/'
 make init
-python train.py
-python test.py
+python final_pipeline/train.py
+python final_pipeline/test.py
 ```
