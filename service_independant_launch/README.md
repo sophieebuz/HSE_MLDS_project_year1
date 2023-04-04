@@ -43,9 +43,9 @@ _**Примечание**_ файлы, содержащиеся в данной 
  ![img1](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/service_independant_launch/service_independant_launch/screenshots/main_page_str.jpg)
 
  2. Вам будет предложено загрузить csv файл для получения предсказаний.  
-    | date | url |
-    | ------ | ------ |
-    | 2021/08/16 | aaaa |
+    | date | url | topic | tags | title | text |
+    | ------ | ------ | ------ | ------ | ------ | ------ |
+    | гггг/мм/дд | url ссылка | тема статьи | "подтема" статьи | заголовок статьи | текст статьи |
  ![img2](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/service_independant_launch/service_independant_launch/screenshots/uploadfile1_str.jpg)
 
  3. После успешной загрузки файла слева от кнопки "Выберите файл" появится надпись, показывающая название загруженного файла.  
