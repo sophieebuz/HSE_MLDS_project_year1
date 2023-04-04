@@ -15,11 +15,11 @@ _**Примечание**_ файлы, содержащиеся в данной 
     - https://drive.google.com/file/d/1Lr2N4LxsugqyQTzsbxUfJYOgIAokla4i/view?usp=share_link
     - https://drive.google.com/file/d/1tnzoCwZXK6LA_yFv0LEki_cE_53V-kwj/view?usp=share_link
  3. Создать виртуальное окружение с python 3.10
- 4. Поставьте зависимости для проекта:
+ 4. Поставьте зависимости для проекта (установить необходимые пакеты для работы микросервиса):
     ```
     pip install -r requirements.txt
     ```
- 6. В терминале написать команду
+ 6. Для запуска микросервиса в терминале написать команду
     ```
     uvicorn main:app
     ```
