@@ -36,4 +36,4 @@ _**Примечание**_ файлы, содержащиеся в данной 
 
 ### Инструкция по использованию сервиса
 
-![img1](https://github.com/sophieebuz/HSE_MLDS_project_year1/tree/service_independant_launch/service_independant_launch/screenshots/main_page_str.jpg)
+![img1](https://github.com/sophieebuz/HSE_MLDS_project_year1/service_independant_launch/screenshots/main_page_str.jpg)
