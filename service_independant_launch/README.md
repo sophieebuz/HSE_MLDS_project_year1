@@ -39,6 +39,7 @@ _**Примечание**_ файлы, содержащиеся в данной 
      - при запуске из докер-контейнера `http://localhost:8898/`
      - при локальном запуске `http://127.0.0.1:8000/`  
      Вы попадете на главную страницу. Для дальнейшей работы кликните на `перейти к загрузке файла`.
+
  ![img1](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/service_independant_launch/service_independant_launch/screenshots/main_page_str.jpg)
 
  2. Вам будет предложено загрузить csv файл для получения предсказаний.
