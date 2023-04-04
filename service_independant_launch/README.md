@@ -14,11 +14,16 @@ _**Примечание**_ файлы, содержащиеся в данной 
  2. Скачать и положить в корень папки `picke_files` слудцющие pickle файлы:
     - https://drive.google.com/file/d/1Lr2N4LxsugqyQTzsbxUfJYOgIAokla4i/view?usp=share_link
     - https://drive.google.com/file/d/1tnzoCwZXK6LA_yFv0LEki_cE_53V-kwj/view?usp=share_link
- 3. В терминале написать команду
+ 3. Создать виртуальное окружение с python 3.10
+ 4. Поставьте зависимости для проекта:
+    ```
+    pip install -r requirements.txt
+    ```
+ 6. В терминале написать команду
     ```
     uvicorn main:app
     ```
 
-### Запуск сервиса из docker-image
+### Запуск сервиса в докер-контейнере из созданного docker-image проекта
 
 ### Инструкция по использованию сервиса
