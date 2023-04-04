@@ -43,6 +43,7 @@ _**Примечание**_ файлы, содержащиеся в данной 
  ![img1](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/service_independant_launch/service_independant_launch/screenshots/main_page_str.jpg)
 
  2. Вам будет предложено загрузить csv файл для получения предсказаний.  
+    Файл должен содержать следующие столбцы, значение которых разделено запятой. 
     | date | url | topic | tags | title | text |
     | ------ | ------ | ------ | ------ | ------ | ------ |
     | гггг/мм/дд | url ссылка | тема статьи | "подтема" статьи | заголовок статьи | текст статьи |
