@@ -54,7 +54,7 @@ _**Примечание**_ файлы, содержащиеся в данной 
  
  ![img2](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/service_independant_launch/service_independant_launch/screenshots/uploadfile1_str.jpg)
 
- 3. После успешной загрузки файла слева от кнопки "Выберите файл" появится надпись, показывающая название загруженного файла.  
+ 3. После успешной загрузки файла справа от кнопки "Выберите файл" появится надпись, показывающая название загруженного файла.  
     Нажмите на кнопку "Отправить". Далее подождите пока ваши данные будут обрабаываться.
  ![img3](https://github.com/sophieebuz/HSE_MLDS_project_year1/blob/service_independant_launch/service_independant_launch/screenshots/uploadfile2_str.jpg)
 
