@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Upload file</title>
+        </head>
+        <body>
+        <h1> Загрузите файл для получения предсказания </h1>
+        <h3>
+            Прикрепленный файл должен быть в формате csv и содержать следующие поля: date,url,topic,tags,title,text
+        </h3>
+        <h3>
+            Пояснение полей:
+        </h3>
+            <ul>
+                <li>date - дата публикации статьи</li>
+                <li>url - ссылка на новость</li>
+                <li>topic - тема статьи</li>
+                <li>tags - "подтема" статьи (более узкая, чем предыдущая колонка)</li>
+                <li>title - название статьи</li>
+                <li>text - текст статьи</li>
+            </ul>
+
+            <form action="/prediction" method="post" enctype="multipart/form-data">
+                Прикрепите csv файл: <br>
+                <input type="file" name="uploaded_file" accept="text/csv"> <br><br>
+                <button type="submit">Отправить</button>
+            </form>
+
+        </body>
+    </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Prediction</title>
+            <link rel="stylesheet" href=" {{ url_for('static', path='predictions.css') }} ">
+        </head>
+        <body>
+
+            <h1> Предсказание </h1>
+            <p class="textstyle">
+                Тема из списка, к которой конкретный текст был отнесен моделью<br>
+                Для получения более детального описания текста нажмите на предсказанную тему,
+                соответствующую номеру текста
+            </p>
+            <ol>
+                {% for i in num %}
+                <li>
+                    {% if i == 0 %}
+
+                    <img src="data:image/png;base64, {{picture}}" class="pict" align=right >
+                    <!--<img src="data:image/png;base64, {{picture}}" width=720px height=576px align=right style="margin: 5px 400px auto 7px">-->
+                    {% endif %}
+                    <a href="{{ '/analyse_text?pr=' +i|string +'&name=' +csv_name }}" target="_blank">
+                        {{ pred[i] }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ol>
+
+        </body>
+    </html>
