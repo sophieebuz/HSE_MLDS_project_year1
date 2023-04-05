@@ -18,8 +18,8 @@ def clean_train_data(df):
 
 
 if __name__ == "__main__":
-    model_pickle_file="./data/catboost.pkl"
-    label_encoder_pickle_file="./data/labelencoder.pkl"
+    model_pickle_file = "./data/catboost.pkl"
+    label_encoder_pickle_file = "./data/labelencoder.pkl"
 
     if os.path.exists(model_pickle_file):
         print(f"Model file {model_pickle_file} already exists, remove it before run traininig")

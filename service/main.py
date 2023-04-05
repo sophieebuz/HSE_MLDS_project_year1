@@ -1,11 +1,9 @@
-import os
-from test import doing_test
-
-import pandas as pd
 from analysing import count_topics, count_unigrams, draw_wordcloud, text_print
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
+from .utils import doing_predictions
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -26,18 +24,21 @@ async def upload(request: Request):
 
 @app.post("/prediction")
 async def create_pred(request: Request,
-                      uploaded_file: UploadFile=File(...)):
+                      uploaded_file: UploadFile = File(...)):
     csv_name = uploaded_file.filename
     file_path = f'static/lib/{csv_name}'
     with open(file_path, mode='wb+') as f:
         f.write(uploaded_file.file.read())
 
     try:
-        y_pred, num = doing_test(file_path)
+        y_pred, num = doing_predictions(file_path)
     except NameError as exception:
         raise HTTPException(status_code=404, detail=str(exception))
     except ValueError:
-        raise HTTPException(status_code=404, detail="Что то пошло не так. Проверьте соответствие формата входного файла. Попробуйте снова...")
+        raise HTTPException(
+            status_code=404,
+            detail="Что то пошло не так. Проверьте соответствие формата входного файла. Попробуйте снова..."
+        )
 
     picture = count_topics(y_pred)
 
@@ -53,8 +54,8 @@ async def create_pred(request: Request,
 async def analysing(request: Request):
     params = dict(request.query_params)
     csv_name = params['name']
-    path=f'static/lib/{csv_name}'
-    news = text_print(path=path,i=params['pr'])
+    path = f'static/lib/{csv_name}'
+    news = text_print(path=path, i=params['pr'])
     wcloud = draw_wordcloud(i=params['pr'], photo=False)
     unigrams = count_unigrams(i=params['pr'])
 

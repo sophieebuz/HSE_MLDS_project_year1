@@ -1,15 +1,14 @@
 import base64
 import io
+from collections import Counter, defaultdict
 
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from wordcloud import WordCloud
 
 matplotlib.use('Agg')
-from collections import Counter, defaultdict
-
-import seaborn as sns
 
 
 def text_print(path: str, i: str):
@@ -26,10 +25,10 @@ def text_print(path: str, i: str):
 
 def draw_wordcloud(i: str, photo: bool, name=None):
     wordcloud = WordCloud(
-            width = 1280,
-            height = 720,
-            # width = 320,
-            # height = 240,
+            width=1280,
+            height=720,
+            # width=320,
+            # height=240,
             background_color='white',
             max_words=100,
             max_font_size=200,
@@ -37,16 +36,16 @@ def draw_wordcloud(i: str, photo: bool, name=None):
             random_state=123,
             colormap='twilight')
 
-    df = pd.read_csv('./static/lib/df_preprocess.csv')
-    index = int(i)
-    data = df['text_str'][index]
-    wc = wordcloud.generate(data)
+    # df = pd.read_csv('./static/lib/df_preprocess.csv')
+    # index = int(i)
+    # data = df['text_str'][index]
+    # wc = wordcloud.generate(data)
     fig = plt.figure(1, figsize=(20, 12))
     plt.axis('off')
     plt.imshow(wordcloud)
-    if photo == True:
+    if photo:
         plt.savefig(name, bbox_inches='tight')
-    #plt.show()
+    # plt.show()
     pngImage = io.BytesIO()
     fig.savefig(pngImage)
     pngImageb64String = base64.b64encode(pngImage.getvalue()).decode('ascii')
@@ -98,7 +97,7 @@ def count_topics(topics):
     x = [topic_dict[i][1] for i in range(len(topic_dict))]
 
     fig, axes = plt.subplots(ncols=1, figsize=(12, 8), dpi=1200)
-    #fig.set_size_inches(640, 480)
+    # fig.set_size_inches(640, 480)
     plt.tight_layout()
     sns.barplot(x=x, y=y, ax=axes, palette="crest")
     axes.spines['right'].set_visible(False)
