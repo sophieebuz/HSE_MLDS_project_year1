@@ -14,7 +14,7 @@ clf, label_encoder = load_model(
 def doing_predictions(file_path: str):
     df = pd.read_csv(file_path)
 
-    df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
+    df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
     lemmatization(df)
     make_date_features(df)
 

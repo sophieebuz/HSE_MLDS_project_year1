@@ -7,7 +7,7 @@ from sklearn.metrics import classification_report, f1_score
 if __name__ == "__main__":
     df = pd.read_csv("./final_pipeline/data/test_50k.csv")
 
-    df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
+    df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
     lemmatization(df)
     make_date_features(df)
 
