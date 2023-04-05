@@ -34,3 +34,9 @@ python final_pipeline/test.py
 make init
 make run_service
 ```
+
+### Запуск web-сервиса внутри докера
+```
+make docker_build
+make docker_start
+```

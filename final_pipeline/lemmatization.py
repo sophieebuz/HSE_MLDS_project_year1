@@ -29,7 +29,12 @@ def make_lemmas(text: str, mystem_instance: Mystem) -> str:
     return " ".join(text_splitted)
 
 
-def lemmatization(df: pd.DataFrame):
+def lemmatization(df: pd.DataFrame, use_parallel=False):
     mystem_instance = Mystem()
-    df['text_str'] = df["text"].parallel_apply(make_lemmas, args=[mystem_instance])
-    df['title_lemmas'] = df["title"].parallel_apply(make_lemmas, args=[mystem_instance])
+
+    if use_parallel:
+        df['text_str'] = df["text"].parallel_apply(make_lemmas, args=[mystem_instance])
+        df['title_lemmas'] = df["title"].parallel_apply(make_lemmas, args=[mystem_instance])
+    else:
+        df['text_str'] = [make_lemmas(df['text'][i], mystem_instance) for i in range(len(df))]
+        df['title_lemmas'] = [make_lemmas(df['title'][i], mystem_instance) for i in range(len(df))]

@@ -1,15 +1,16 @@
-import pandas as pd
-from fastapi import FastAPI, Request, File, UploadFile, HTTPException
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from test import doing_test
-from analysing import text_print, draw_wordcloud, count_unigrams, count_topics
 import os
 
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from service.analysing import (count_topics, count_unigrams, draw_wordcloud,
+                               text_print)
+from service.utils import doing_predictions
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="./service/static"), name="static")
+templates = Jinja2Templates(directory="./service/templates")
 
 
 @app.get("/")
@@ -26,18 +27,33 @@ async def upload(request: Request):
 
 @app.post("/prediction")
 async def create_pred(request: Request,
-                      uploaded_file: UploadFile=File(...)):
+                      uploaded_file: UploadFile = File(...)):
     csv_name = uploaded_file.filename
-    file_path = f'static/lib/{csv_name}'
+    assert csv_name
+
+    file_path = f'./service/static/lib/{csv_name}'
+    file_path_preprocessed = '{file_path}_preprocessed'
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
+
+    if os.path.exists(file_path_preprocessed):
+        os.remove(file_path_preprocessed)
+
     with open(file_path, mode='wb+') as f:
         f.write(uploaded_file.file.read())
 
     try:
-        y_pred, num = doing_test(file_path)
+        y_pred, num = doing_predictions(file_path, file_path_preprocessed)
     except NameError as exception:
+        print(exception)
         raise HTTPException(status_code=404, detail=str(exception))
-    except ValueError:
-        raise HTTPException(status_code=404, detail="Что то пошло не так. Проверьте соответствие формата входного файла. Попробуйте снова...")
+    except ValueError as exception:
+        print(exception)
+        raise HTTPException(
+            status_code=404,
+            detail="Что то пошло не так. Проверьте соответствие формата входного файла. Попробуйте снова..."
+        )
 
     picture = count_topics(y_pred)
 
@@ -53,10 +69,10 @@ async def create_pred(request: Request,
 async def analysing(request: Request):
     params = dict(request.query_params)
     csv_name = params['name']
-    path=f'static/lib/{csv_name}'
-    news = text_print(path=path,i=params['pr'])
-    wcloud = draw_wordcloud(i=params['pr'], photo=False)
-    unigrams = count_unigrams(i=params['pr'])
+    path = f'./service/static/lib/{csv_name}_preprocessed'
+    news = text_print(path=path, i=params['pr'])
+    wcloud = draw_wordcloud(path=path, i=params['pr'], photo=False)
+    unigrams = count_unigrams(path=path, i=params['pr'])
 
     return templates.TemplateResponse('analyse_text.html',
                                       {"request": request,
