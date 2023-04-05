@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -30,6 +31,9 @@ async def create_pred(request: Request,
     assert csv_name
 
     file_path = f'./service/static/lib/{csv_name}'
+    if os.path.exists(file_path):
+        os.remove(file_path)
+        
     with open(file_path, mode='wb+') as f:
         f.write(uploaded_file.file.read())
 

@@ -8,7 +8,7 @@ if __name__ == "__main__":
     df = pd.read_csv("./final_pipeline/data/test_50k.csv")
 
     df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
-    lemmatization(df)
+    lemmatization(df, use_parallel=True)
     make_date_features(df)
 
     clf, label_encoder = load_model(

@@ -27,10 +27,10 @@ if __name__ == "__main__":
 
     df = pd.read_csv("./final_pipeline/data/train_200k.csv")
 
-    df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
+    df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
     df = clean_train_data(df)
 
-    lemmatization(df)
+    lemmatization(df, use_parallel=True)
     label_encoder = encoder(df)
     make_date_features(df)
 
