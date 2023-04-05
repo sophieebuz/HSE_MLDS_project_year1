@@ -24,7 +24,7 @@ def doing_predictions(file_path: str):
     encoder(df, label_encoder)
     y_pred = np.ravel(clf.predict(df[COLUMNS]))
 
-    # df.to_csv('static/lib/df_preprocess.csv', index=False)
+    df.to_csv('static/lib/df_preprocess.csv', index=False)
 
     dict_topic = dict(zip(np.arange(0, len(label_encoder.classes_)), label_encoder.classes_))
     preds = [dict_topic[i] for i in y_pred]

@@ -2,3 +2,4 @@
 __pycache__
 final_pipeline/catboost_info/
 final_pipeline/data/
+service/static/lib
