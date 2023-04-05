@@ -6,7 +6,8 @@ RUN apt-get install -y python3.10 python3-pip
 RUN mkdir /home/service
 WORKDIR /home/service
 
-ADD . /home/service
+ADD ./requirements.txt /home/service
+ADD ./Makefile /home/service
 
 RUN make install_dependencies
 

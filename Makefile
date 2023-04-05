@@ -1,3 +1,5 @@
+ROOT_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+
 download_data:
 ifeq (,$(wildcard ./final_pipeline/data/test_50k.csv))
 	mkdir -p ./final_pipeline/data
@@ -16,9 +18,9 @@ docker_build:
 	docker stop mlds_project_container
 	docker rm mlds_project_container
 	docker build -t mlds_project .
-	docker create --name mlds_project_container -p 8000:8000 mlds_project
+	docker create -v $(ROOT_DIR):/home/service:rw --name mlds_project_container -p 8000:8000 mlds_project
 
-docker_run:
+docker_start:
 	docker start mlds_project_container
 
 docker_stop:
