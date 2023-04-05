@@ -18,8 +18,11 @@ def clean_train_data(df):
 
 
 if __name__ == "__main__":
-    if os.path.exists("./data/catboost.pkl"):
-        print("Model file already exists, remove it before run this file")
+    model_pickle_file="./data/catboost.pkl"
+    label_encoder_pickle_file="./data/labelencoder.pkl"
+
+    if os.path.exists(model_pickle_file):
+        print(f"Model file {model_pickle_file} already exists, remove it before run traininig")
         exit()
 
     df = pd.read_csv("./data/train_200k.csv")
@@ -33,8 +36,8 @@ if __name__ == "__main__":
 
     clf = train_model(df, df["topic_le"])
     save_model(
-        model_pickle_file="./data/catboost.pkl",
+        model_pickle_file=model_pickle_file,
         model=clf,
-        label_encoder_pickle_file="./data/labelencoder.pkl",
+        label_encoder_pickle_file=label_encoder_pickle_file,
         label_encoder=label_encoder
     )
