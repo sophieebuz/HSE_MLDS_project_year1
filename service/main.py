@@ -1,13 +1,14 @@
-from analysing import count_topics, count_unigrams, draw_wordcloud, text_print
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from .utils import doing_predictions
+from service.analysing import (count_topics, count_unigrams, draw_wordcloud,
+                               text_print)
+from service.utils import doing_predictions
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="./service/static"), name="static")
+templates = Jinja2Templates(directory="./service/templates")
 
 
 @app.get("/")
@@ -26,7 +27,9 @@ async def upload(request: Request):
 async def create_pred(request: Request,
                       uploaded_file: UploadFile = File(...)):
     csv_name = uploaded_file.filename
-    file_path = f'static/lib/{csv_name}'
+    assert csv_name
+
+    file_path = f'./service/static/lib/{csv_name}'
     with open(file_path, mode='wb+') as f:
         f.write(uploaded_file.file.read())
 

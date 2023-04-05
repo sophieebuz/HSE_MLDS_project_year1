@@ -6,20 +6,20 @@ from final_pipeline.lemmatization import lemmatization
 from final_pipeline.model import COLUMNS, load_model
 
 clf, label_encoder = load_model(
-    model_pickle_file="./../final_pipeline/data/catboost.pkl",
-    label_encoder_pickle_file="./../final_pipeline/labelencoder.pkl"
+    model_pickle_file="./final_pipeline/data/catboost.pkl",
+    label_encoder_pickle_file="./final_pipeline/data/labelencoder.pkl"
 )
 
 
 def doing_predictions(file_path: str):
     df = pd.read_csv(file_path)
 
-    if set(df.columns) != set(COLUMNS):
-        raise NameError("Несоответствие формата таблицы")
-
     df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
     lemmatization(df)
     make_date_features(df)
+
+    if set(df.columns) != set(COLUMNS):
+        raise NameError("Несоответствие формата таблицы")
 
     encoder(df, label_encoder)
     y_pred = np.ravel(clf.predict(df[COLUMNS]))
