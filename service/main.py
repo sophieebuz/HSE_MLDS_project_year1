@@ -36,8 +36,10 @@ async def create_pred(request: Request,
     try:
         y_pred, num = doing_predictions(file_path)
     except NameError as exception:
+        print(exception)
         raise HTTPException(status_code=404, detail=str(exception))
-    except ValueError:
+    except ValueError as exception:
+        print(exception)
         raise HTTPException(
             status_code=404,
             detail="Что то пошло не так. Проверьте соответствие формата входного файла. Попробуйте снова..."

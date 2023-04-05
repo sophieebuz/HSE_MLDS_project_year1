@@ -25,9 +25,8 @@
 ### Запуск  проекта
 ```
 make init
-cd final_pipeline
-python train.py
-python test.py
+python final_pipeline/train.py
+python final_pipeline/test.py
 ```
 
 ### Запуск web-сервиса

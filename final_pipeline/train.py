@@ -18,14 +18,14 @@ def clean_train_data(df):
 
 
 if __name__ == "__main__":
-    model_pickle_file = "./data/catboost.pkl"
-    label_encoder_pickle_file = "./data/labelencoder.pkl"
+    model_pickle_file = "./final_pipeline/data/catboost.pkl"
+    label_encoder_pickle_file = "./final_pipeline/data/labelencoder.pkl"
 
     if os.path.exists(model_pickle_file):
         print(f"Model file {model_pickle_file} already exists, remove it before run traininig")
         exit()
 
-    df = pd.read_csv("./data/train_200k.csv")
+    df = pd.read_csv("./final_pipeline/data/train_200k.csv")
 
     df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
     df = clean_train_data(df)
