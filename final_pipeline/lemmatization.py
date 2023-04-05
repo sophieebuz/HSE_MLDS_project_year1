@@ -38,5 +38,3 @@ def lemmatization(df: pd.DataFrame, use_parallel=False):
     else:
         df['text_str'] = [make_lemmas(df['text'][i], mystem_instance) for i in range(len(df))]
         df['title_lemmas'] = [make_lemmas(df['title'][i], mystem_instance) for i in range(len(df))]
-
-

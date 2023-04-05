@@ -11,20 +11,21 @@ clf, label_encoder = load_model(
 )
 
 
-def doing_predictions(file_path: str):
+def doing_predictions(file_path: str, file_path_preprocessed: str):
     df = pd.read_csv(file_path)
 
     df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
     lemmatization(df)
     make_date_features(df)
 
-    if set(df.columns) != set(COLUMNS):
-        raise NameError("Несоответствие формата таблицы")
+    for required_column in COLUMNS:
+        if required_column not in df.columns:
+            raise NameError(f"Несоответствие формата таблицы, нет колонки {required_column}")
 
     encoder(df, label_encoder)
     y_pred = np.ravel(clf.predict(df[COLUMNS]))
 
-    df.to_csv('static/lib/df_preprocess.csv', index=False)
+    df.to_csv(file_path_preprocessed, index=False)
 
     dict_topic = dict(zip(np.arange(0, len(label_encoder.classes_)), label_encoder.classes_))
     preds = [dict_topic[i] for i in y_pred]
