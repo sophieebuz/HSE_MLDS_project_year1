@@ -1,13 +1,15 @@
-import pandas as pd
-from wordcloud import WordCloud
-import io
 import base64
+import io
+
 import matplotlib
 import matplotlib.pyplot as plt
+import pandas as pd
+from wordcloud import WordCloud
+
 matplotlib.use('Agg')
-from collections import defaultdict
+from collections import Counter, defaultdict
+
 import seaborn as sns
-from collections import Counter
 
 
 def text_print(path: str, i: str):

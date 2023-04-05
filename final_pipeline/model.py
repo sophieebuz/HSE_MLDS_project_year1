@@ -38,21 +38,36 @@ def train_model(X: pd.DataFrame, y: pd.DataFrame) -> CatBoostClassifier:
     return model
 
 
-def load_model(pickle_file: str) -> typing.Tuple[CatBoostClassifier, LabelEncoder]:
+def load_model(
+        model_pickle_file: str,
+        label_encoder_pickle_file: str
+) -> typing.Tuple[CatBoostClassifier, LabelEncoder]:
     """
     Функция загружает модель из pickle файла
     """
-    with open(pickle_file, 'rb') as file:
-        data = pickle.load(file)
-    return data['model'], data['label_encoder']
+    with open(model_pickle_file, 'rb') as file:
+        model = pickle.load(file)
+
+    with open(label_encoder_pickle_file, 'rb') as file:
+        label_encoder = pickle.load(file)
+
+    return model, label_encoder
 
 
-def save_model(pickle_file: str, model: CatBoostClassifier, label_encoder: LabelEncoder):
-    if os.path.exists(pickle_file):
-        os.remove(pickle_file)
+def save_model(
+        model_pickle_file: str,
+        model: CatBoostClassifier,
+        label_encoder_pickle_file: str,
+        label_encoder: LabelEncoder
+):
+    if os.path.exists(model_pickle_file):
+        os.remove(model_pickle_file)
 
-    with open(pickle_file, 'wb') as handle:
-        pickle.dump({
-            'model': model,
-            'label_encoder': label_encoder,
-        }, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(model_pickle_file, 'wb') as handle:
+        pickle.dump(model, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    if os.path.exists(label_encoder_pickle_file):
+        os.remove(label_encoder_pickle_file)
+
+    with open(label_encoder_pickle_file, 'wb') as handle:
+        pickle.dump(label_encoder, handle, protocol=pickle.HIGHEST_PROTOCOL)

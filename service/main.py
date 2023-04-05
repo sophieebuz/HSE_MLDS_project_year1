@@ -1,11 +1,11 @@
-import pandas as pd
-from fastapi import FastAPI, Request, File, UploadFile, HTTPException
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from test import doing_test
-from analysing import text_print, draw_wordcloud, count_unigrams, count_topics
 import os
+from test import doing_test
 
+import pandas as pd
+from analysing import count_topics, count_unigrams, draw_wordcloud, text_print
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")

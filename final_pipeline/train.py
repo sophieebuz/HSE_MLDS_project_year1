@@ -1,5 +1,6 @@
-import pandas as pd
+import os
 
+import pandas as pd
 from feature_engineering import encoder, make_date_features
 from lemmatization import lemmatization
 from model import save_model, train_model
@@ -17,6 +18,10 @@ def clean_train_data(df):
 
 
 if __name__ == "__main__":
+    if os.path.exists("./data/catboost.pkl"):
+        print("Model file already exists, remove it before run this file")
+        exit()
+
     df = pd.read_csv("./data/train_200k.csv")
 
     df["date"] = pd.to_datetime(df["date"], format="%Y-%m-%d")
@@ -27,4 +32,9 @@ if __name__ == "__main__":
     make_date_features(df)
 
     clf = train_model(df, df["topic_le"])
-    save_model("./data/catboost.pkl", clf, label_encoder)
+    save_model(
+        model_pickle_file="./data/catboost.pkl",
+        model=clf,
+        label_encoder_pickle_file="./data/labelencoder.pkl",
+        label_encoder=label_encoder
+    )

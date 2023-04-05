@@ -3,6 +3,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 #from pandarallel import pandarallel
 from pymystem3 import Mystem
+
 nltk.download("stopwords")
 
 #pandarallel.initialize(progress_bar=True)
