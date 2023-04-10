@@ -38,6 +38,6 @@ make run_service
 ### Запуск web-сервиса внутри докера
 ```
 make download_data
-make docker_build
+make -i docker_build
 make docker_start
 ```

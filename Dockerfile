@@ -1,7 +1,7 @@
-FROM ubuntu
+FROM python:3.10
 
 RUN apt-get update
-RUN apt-get install -y python3.10 python3-pip
+#RUN apt-get install -y python3.10 python3-pip
 
 RUN mkdir /home/service
 WORKDIR /home/service
