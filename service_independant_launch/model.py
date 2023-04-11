@@ -47,7 +47,9 @@ def load_model(pickle_file: str) -> typing.Tuple[CatBoostClassifier, LabelEncode
     return data
 
 
-def save_model(pickle_file: str, model: CatBoostClassifier, label_encoder: LabelEncoder):
+def save_model(pickle_file: str,
+               model: CatBoostClassifier,
+               label_encoder: LabelEncoder):
     if os.path.exists(pickle_file):
         os.remove(pickle_file)
 

@@ -1,13 +1,12 @@
-import pandas as pd
+from collections import defaultdict, Counter
 from wordcloud import WordCloud
+import pandas as pd
+import seaborn as sns
 import io
 import base64
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
-from collections import defaultdict
-import seaborn as sns
-from collections import Counter
 
 
 def text_print(path: str, i: str):
@@ -24,10 +23,8 @@ def text_print(path: str, i: str):
 
 def draw_wordcloud(i: str, photo: bool, name=None):
     wordcloud = WordCloud(
-            width = 1280,
-            height = 720,
-            # width = 320,
-            # height = 240,
+            width=1280,
+            height=720,
             background_color='white',
             max_words=100,
             max_font_size=200,
@@ -38,13 +35,12 @@ def draw_wordcloud(i: str, photo: bool, name=None):
     df = pd.read_csv('./static/lib/df_preprocess.csv')
     index = int(i)
     data = df['text_str'][index]
-    wc = wordcloud.generate(data)
+    wordcloud.generate(data)
     fig = plt.figure(1, figsize=(20, 12))
     plt.axis('off')
     plt.imshow(wordcloud)
-    if photo == True:
+    if photo is True:
         plt.savefig(name, bbox_inches='tight')
-    #plt.show()
     pngImage = io.BytesIO()
     fig.savefig(pngImage)
     pngImageb64String = base64.b64encode(pngImage.getvalue()).decode('ascii')
@@ -96,7 +92,6 @@ def count_topics(topics):
     x = [topic_dict[i][1] for i in range(len(topic_dict))]
 
     fig, axes = plt.subplots(ncols=1, figsize=(12, 8), dpi=1200)
-    #fig.set_size_inches(640, 480)
     plt.tight_layout()
     sns.barplot(x=x, y=y, ax=axes, palette="crest")
     axes.spines['right'].set_visible(False)

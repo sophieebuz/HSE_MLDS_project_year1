@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "hse-mlds-project-year1"
+version = "0.1.0"
+description = ""
+authors = ["Sophie Buzaeva"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+catboost = "^1.1.1"
+fastapi = "^0.95.0"
+uvicorn = {extras = ["standart"], version = "^0.21.1"}
+jinja2 = "^3.1.2"
+pandas = "^2.0.0"
+scikit-learn = "^1.2.2"
+nltk = "^3.8.1"
+pymystem3 = "^0.2.0"
+pandarallel = "^1.6.4"
+wordcloud = "^1.8.2.2"
+python-multipart = "^0.0.6"
+seaborn = "^0.12.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
