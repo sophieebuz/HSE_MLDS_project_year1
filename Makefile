@@ -27,3 +27,9 @@ docker_stop:
 	docker stop mlds_project_container
 
 init: install_dependencies download_data
+
+docker_prod_build:
+	docker build -f ./Dockerfile_prod  -t mlds_project_prod .
+
+docker_prod_run:
+	docker run --rm -it --name mlds_project_container_prod -p 8000:8000 mlds_project_prod

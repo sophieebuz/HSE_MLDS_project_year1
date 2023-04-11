@@ -1,0 +1,16 @@
+FROM python:3.10
+
+RUN apt-get update
+#RUN apt-get install -y python3.10 python3-pip
+
+RUN mkdir /home/service
+WORKDIR /home/service
+
+ADD ./requirements.txt /home/service
+ADD ./final_pipeline /home/service/final_pipeline
+ADD ./service /home/service/service
+ADD ./Makefile /home/service
+
+RUN make install_dependencies
+
+CMD ["uvicorn", "service.main:app", "--host", "0.0.0.0" ]
