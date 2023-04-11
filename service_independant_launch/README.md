@@ -15,19 +15,35 @@
     docker run --rm -it -p 8898:8000 --name mlds_project_year1_service sofibuz/hse_mlds_project_year1_service
     ```
     _Примечание_: [ссылка на dockerhub](https://hub.docker.com/repository/docker/sofibuz/hse_mlds_project_year1_service/general) 
- 
-### Запуск сервиса локально на компьютере
+
+
+### Запуск сервиса локально на компьютере с помощью Poetry
+ 1. Скачать содержимое папки `"service_independant_launch"`
+ 2. Скачать и положить в корень папки `picke_files` слудующие pickle файлы:
+    - https://drive.google.com/file/d/1Lr2N4LxsugqyQTzsbxUfJYOgIAokla4i/view?usp=share_link
+    - https://drive.google.com/file/d/1tnzoCwZXK6LA_yFv0LEki_cE_53V-kwj/view?usp=share_link
+ 3. Для установки виртуальной среды в терминале написать команду (предварительно убедитель, что утилита Poetry у вас стоит) 
+    ```
+    poetry install
+    ```
+ 4. Для запуска сервиса в терминале написать команду
+    ```
+    poetry run uvicorn main:app
+    ```
+
+
+### Запуск сервиса локально на компьютере через requirements.txt
  1. Скачать содержимое папки `"service_independant_launch"`
  2. Скачать и положить в корень папки `picke_files` слудующие pickle файлы:
     - https://drive.google.com/file/d/1Lr2N4LxsugqyQTzsbxUfJYOgIAokla4i/view?usp=share_link
     - https://drive.google.com/file/d/1tnzoCwZXK6LA_yFv0LEki_cE_53V-kwj/view?usp=share_link
  3. Создать виртуальное окружение с python 3.10  
     _Примечание_: важно, чтобы версия питона была именно эта
- 5. Поставьте зависимости для проекта (установить необходимые пакеты для работы сервиса):
+ 4. Поставьте зависимости для проекта (установить необходимые пакеты для работы сервиса):
     ```
     pip install -r requirements.txt
     ```
- 6. Для запуска сервиса в терминале написать команду
+ 5. Для запуска сервиса в терминале написать команду
     ```
     uvicorn main:app
     ```
