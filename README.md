@@ -29,15 +29,24 @@ python final_pipeline/train.py
 python final_pipeline/test.py
 ```
 
-### Запуск web-сервиса
+### Запуск web-сервиса локально
 ```
 make init
 make run_service
 ```
+открыть в браузере страницу  http://127.0.0.1:8000
 
-### Запуск web-сервиса внутри докера
+### Запуск web-сервиса внутри докер контейнера
 ```
 make download_data
 make -i docker_build
 make docker_start
+```
+
+### Запуск web-сервиса c помощью докер-образ проекта на Dockerhub
+
+https://hub.docker.com/repository/docker/annaivantsova/hse_mlds_project_year1_service/general
+
+```
+docker run --rm -it --name mlds_project_year1_service -p 8000:8000 annaivantsova/hse_mlds_project_year1_service
 ```

@@ -8,11 +8,13 @@ ifeq (,$(wildcard ./final_pipeline/data/test_50k.csv))
 	rm -f ./final_pipeline/data/data.zip
 endif
 
+init: install_dependencies download_data
+
 install_dependencies:
-	pip install -r requirements.txt
+	poetry install
 
 run_service:
-	uvicorn service.main:app --host 0.0.0.0 --reload
+	poetry run uvicorn service.main:app --host 0.0.0.0 --reload
 
 docker_build:
 	docker stop mlds_project_container
@@ -26,10 +28,12 @@ docker_start:
 docker_stop:
 	docker stop mlds_project_container
 
-init: install_dependencies download_data
-
 docker_prod_build:
 	docker build -f ./Dockerfile_prod  -t mlds_project_prod .
+
+docker_prod_push:
+	docker tag mlds_project_prod annaivantsova/hse_mlds_project_year1_service:latest
+	docker push annaivantsova/hse_mlds_project_year1_service:latest
 
 docker_prod_run:
 	docker run --rm -it --name mlds_project_container_prod -p 8000:8000 mlds_project_prod

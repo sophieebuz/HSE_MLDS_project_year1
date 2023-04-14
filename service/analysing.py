@@ -27,8 +27,6 @@ def draw_wordcloud(path: str, i: str, photo: bool, name=None):
     wordcloud = WordCloud(
             width=1280,
             height=720,
-            # width=320,
-            # height=240,
             background_color='white',
             max_words=100,
             max_font_size=200,
@@ -45,7 +43,6 @@ def draw_wordcloud(path: str, i: str, photo: bool, name=None):
     plt.imshow(wordcloud)
     if photo:
         plt.savefig(name, bbox_inches='tight')
-    # plt.show()
     pngImage = io.BytesIO()
     fig.savefig(pngImage)
     pngImageb64String = base64.b64encode(pngImage.getvalue()).decode('ascii')
