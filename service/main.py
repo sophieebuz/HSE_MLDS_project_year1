@@ -31,8 +31,11 @@ async def create_pred(request: Request,
     csv_name = uploaded_file.filename
     assert csv_name
 
+    if not os.path.isdir("./service/static/lib"):
+        os.mkdir('./service/static/lib')
+
     file_path = f'./service/static/lib/{csv_name}'
-    file_path_preprocessed = '{file_path}_preprocessed'
+    file_path_preprocessed = f'{file_path}_preprocessed'
 
     if os.path.exists(file_path):
         os.remove(file_path)

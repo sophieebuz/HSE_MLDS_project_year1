@@ -3,3 +3,11 @@ __pycache__
 final_pipeline/catboost_info/
 final_pipeline/data/
 service/static/lib
+.DS_Store
+.idea
+.ipynb_checkpoints
+.coverage
+venv/
+*.csv
+.pytest_cache
+*.png
