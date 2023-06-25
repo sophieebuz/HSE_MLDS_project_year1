@@ -1,3 +1,0 @@
-catboost==1.1.1
-pandarallel==1.6.4
-pymystem3==0.2.0
