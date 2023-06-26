@@ -1,13 +1,15 @@
 import pandas as pd
-from feature_engineering import encoder, make_date_features
+from feature_engineering import encoder, make_date_features, clean_train_data
 from lemmatization import lemmatization
 from model import COLUMNS, load_model
 from sklearn.metrics import classification_report, f1_score
+
 
 if __name__ == "__main__":
     df = pd.read_csv("./final_pipeline/data/test_50k.csv")
 
     df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
+    df = clean_train_data(df)
     lemmatization(df, use_parallel=True)
     make_date_features(df)
 

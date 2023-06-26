@@ -30,3 +30,14 @@ def make_date_features(df: pd.DataFrame):
     # Фича выходной или нет
     df["dummy_weekday"] = 1
     df.loc[df["day_of_week"] >= 5, "dummy_weekday"] = 0
+
+
+def clean_train_data(df):
+    df = df[df["date"].dt.year != 1914]
+
+    df = df[~df["text"].isna()]
+
+    classes_to_drop = ["Библиотека", "Оружие", "ЧМ-2014",
+                       "Мотор", "МедНовости", "Сочи"]
+    df = df[(~df["topic"].isna()) & (~df["topic"].isin(classes_to_drop))]
+    return df
