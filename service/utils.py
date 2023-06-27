@@ -4,6 +4,7 @@ import pandas as pd
 from final_pipeline.feature_engineering import encoder, make_date_features
 from final_pipeline.lemmatization import lemmatization
 from final_pipeline.model import COLUMNS, load_model
+from service.db_api import db_api
 
 clf, label_encoder = load_model(
     model_pickle_file="./final_pipeline/data/catboost.pkl",
@@ -11,9 +12,10 @@ clf, label_encoder = load_model(
 )
 
 
-def doing_predictions(file_path: str, file_path_preprocessed: str):
-    df = pd.read_csv(file_path)
-
+def doing_predictions(table: str):
+    db = db_api()
+    df = db.get_df(table=table)
+    
     df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
     lemmatization(df)
     make_date_features(df)
@@ -24,8 +26,7 @@ def doing_predictions(file_path: str, file_path_preprocessed: str):
 
     encoder(df, label_encoder)
     y_pred = np.ravel(clf.predict(df[COLUMNS]))
-
-    df.to_csv(file_path_preprocessed, index=False)
+    db.push_df(df=df, table=f'{table}_preprocessed')
 
     dict_topic = dict(zip(np.arange(0, len(label_encoder.classes_)), label_encoder.classes_))
     preds = [dict_topic[i] for i in y_pred]

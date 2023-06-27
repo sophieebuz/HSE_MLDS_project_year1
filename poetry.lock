@@ -601,6 +601,22 @@ pyparsing = ">=2.3.1"
 python-dateutil = ">=2.7"
 
 [[package]]
+name = "mpld3"
+version = "0.5.9"
+description = "D3 Viewer for Matplotlib"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "mpld3-0.5.9-py3-none-any.whl", hash = "sha256:cecdd988b24f8d7c7f362b8f72bb91df1a24b1993dd02a958223918a31c31052"},
+    {file = "mpld3-0.5.9.tar.gz", hash = "sha256:d8d228b2911132fd0154e2a49543b7f97247f9851cfe468c6b616f452c676158"},
+]
+
+[package.dependencies]
+jinja2 = "*"
+matplotlib = "*"
+
+[[package]]
 name = "nltk"
 version = "3.8.1"
 description = "Natural Language Toolkit"
@@ -858,6 +874,37 @@ files = [
 [package.dependencies]
 packaging = "*"
 tenacity = ">=6.2.0"
+
+[[package]]
+name = "prometheus-client"
+version = "0.17.0"
+description = "Python client for the Prometheus monitoring system."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "prometheus_client-0.17.0-py3-none-any.whl", hash = "sha256:a77b708cf083f4d1a3fb3ce5c95b4afa32b9c521ae363354a4a910204ea095ce"},
+    {file = "prometheus_client-0.17.0.tar.gz", hash = "sha256:9c3b26f1535945e85b8934fb374678d263137b78ef85f305b1156c7c881cd11b"},
+]
+
+[package.extras]
+twisted = ["twisted"]
+
+[[package]]
+name = "prometheus-fastapi-instrumentator"
+version = "6.0.0"
+description = "Instrument your FastAPI with Prometheus metrics."
+category = "main"
+optional = false
+python-versions = ">=3.7.0,<4.0.0"
+files = [
+    {file = "prometheus_fastapi_instrumentator-6.0.0-py3-none-any.whl", hash = "sha256:6f66a951a4801667f7311d161f3aebfe0cd202391d0f067fbbe169792e2d987b"},
+    {file = "prometheus_fastapi_instrumentator-6.0.0.tar.gz", hash = "sha256:f1ddd0b8ead75e71d055bdf4cb7e995ec6a6ca63543245e7bbc5ca9b14c45191"},
+]
+
+[package.dependencies]
+fastapi = ">=0.38.1,<1.0.0"
+prometheus-client = ">=0.8.0,<1.0.0"
 
 [[package]]
 name = "psutil"
@@ -1423,4 +1470,4 @@ pillow = "*"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "0d0e980a81ac8b27ce4b5703594cde1884baebf4f7a55ee9df6153c906114878"
+content-hash = "109fb3b9f1416ff8dd5557b12cd4f353b783cbe7100ad83f7a0ef8e334882a0e"

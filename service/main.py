@@ -1,16 +1,34 @@
 import os
-
+import pandas as pd
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-
+from service.db_api import db_api
 from service.analysing import (count_topics, count_unigrams, draw_wordcloud,
                                text_print)
 from service.utils import doing_predictions
+from service.monitoring import get_blocks
+import datetime
+import platform
+import psutil
+
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./service/static"), name="static")
 templates = Jinja2Templates(directory="./service/templates")
+
+@app.get("/monitoring")
+async def monitoring(request: Request):
+    active_since = datetime.datetime.fromtimestamp(psutil.boot_time())
+    return templates.TemplateResponse("monitoring.html",
+                           {"request": request,
+                            'script_version':'1.0.0',
+                           'active_since':active_since,
+                           'days_active':(datetime.datetime.now() - active_since).days,
+                           'system':platform.system(),
+                           'release':platform.release(),
+                           'version':platform.version(),
+                           'blocks':get_blocks()})
 
 
 @app.get("/")
@@ -28,26 +46,11 @@ async def upload(request: Request):
 @app.post("/prediction")
 async def create_pred(request: Request,
                       uploaded_file: UploadFile = File(...)):
-    csv_name = uploaded_file.filename
-    assert csv_name
-
-    if not os.path.isdir("./service/static/lib"):
-        os.mkdir('./service/static/lib')
-
-    file_path = f'./service/static/lib/{csv_name}'
-    file_path_preprocessed = f'{file_path}_preprocessed'
-
-    if os.path.exists(file_path):
-        os.remove(file_path)
-
-    if os.path.exists(file_path_preprocessed):
-        os.remove(file_path_preprocessed)
-
-    with open(file_path, mode='wb+') as f:
-        f.write(uploaded_file.file.read())
+    db = db_api()
+    table = db.push_csv(uploaded_file=uploaded_file)
 
     try:
-        y_pred, num = doing_predictions(file_path, file_path_preprocessed)
+        y_pred, num = doing_predictions(table)
     except NameError as exception:
         print(exception)
         raise HTTPException(status_code=500, detail=str(exception))
@@ -64,7 +67,7 @@ async def create_pred(request: Request,
                                       {"request": request,
                                        "pred": y_pred,
                                        "num": num,
-                                       "csv_name": csv_name,
+                                       "csv_name": table,
                                        "picture": picture})
 
 
@@ -72,10 +75,11 @@ async def create_pred(request: Request,
 async def analysing(request: Request):
     params = dict(request.query_params)
     csv_name = params['name']
-    path = f'./service/static/lib/{csv_name}_preprocessed'
-    news = text_print(path=path, i=params['pr'])
-    wcloud = draw_wordcloud(path=path, i=params['pr'], photo=False)
-    unigrams = count_unigrams(path=path, i=params['pr'])
+    db = db_api()
+    df = db.get_df(table=f'{csv_name}_preprocessed')
+    news = text_print(df=df, i=params['pr'])
+    wcloud = draw_wordcloud(df=df, i=params['pr'], photo=False)
+    unigrams = count_unigrams(df=df, i=params['pr'])
 
     return templates.TemplateResponse('analyse_text.html',
                                       {"request": request,
