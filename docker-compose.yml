@@ -1,0 +1,80 @@
+version: "3.10"
+
+services:
+  service:
+    container_name: service
+    build:
+      context: .
+      dockerfile: Dockerfile_prod
+    command: poetry run uvicorn service.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_URL=postgresql://${DB_USERNAME}:${DB_PASSWORD}@postgres:5432/${DB_DATABASE}
+    depends_on:
+      - postgres
+    networks:
+      - net
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    volumes:
+      - ./service/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+       test: ["CMD-SHELL", "pg_isready news -U mlds"]
+       interval: 10s
+       timeout: 5s
+       retries: 5
+    networks:
+      - net
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - net
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./datasource.yml:/etc/grafana/provisioning/datasource.yml
+    # logging:
+    #   driver: loki
+    #   options:
+    #     loki-url: http://host.docker.internal:3100/loki/api/v1/push
+    #     loki-pipeline-stages: |
+    #       - regex:
+    #           expression: '(level|lvl|severity)=(?P<level>\w+)'
+    #       - labels:
+    #           level:
+    networks:
+      - net
+
+volumes:
+  postgres_data:
+  grafana_data:
+  prometheus_data:
+
+networks:
+  net:
+    driver: bridge

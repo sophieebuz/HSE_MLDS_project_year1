@@ -1,7 +1,8 @@
-import sqlite3
 import pandas as pd
 from fastapi import File, UploadFile
 import io
+from service.config import settings
+from sqlalchemy import create_engine, text
 
 class db_api(object):
     DB = None
@@ -9,17 +10,17 @@ class db_api(object):
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(db_api, cls).__new__(cls)
-            cls.instance.DB = sqlite3.connect(':memory:')
+            cls.instance.DB = create_engine(settings.db_url)
         return cls.instance
 
 
     def __db_action(type):
         def decorator(func):
             def wrapper(self, *args, **kwargs):
-                conn = self.DB.cursor()
+                conn = self.DB.connect()
                 res = func(self, conn=conn, **kwargs)
                 if type == 'put':
-                    self.DB.commit()
+                    conn.commit()
                 conn.close()
                 return res
             return wrapper
@@ -32,18 +33,13 @@ class db_api(object):
         csv = io.StringIO(uploaded_file.file.read().decode())
         df = pd.read_csv(csv)
         table = csv_name.replace('.', '_')
-        conn.execute(f"CREATE TABLE IF NOT EXISTS {table}(date,url,topic,tags,title,text)")
-        df.to_sql(table, self.DB, if_exists='replace', index=False)
-        # res = conn.execute(f"SELECT * FROM {table}")
-        # print(res.fetchone())
+        df.to_sql(table, self.DB, if_exists='append', index=False)
         return table
     
     @__db_action('put')
-    def push_df(self, conn, df, table):
-        conn.execute(f"CREATE TABLE IF NOT EXISTS {table}(date,url,topic,tags,title,text,text_str,title_lemmas,year,month,day,date_enc,day_of_week,season,dummy_weekday,topic_le)")
-        df.to_sql(table, self.DB, if_exists='replace', index=False)
-        # res = conn.execute(f"SELECT * FROM {table}")
-        # print(res.fetchone())
+    def push_df(self, conn, df, table, csv_name):
+        conn.execute(text(f"""DELETE FROM {table} WHERE csv_name = '{csv_name}';"""))
+        df.to_sql(table, self.DB, if_exists='append', index=False)
         return table
     
     @__db_action('get')

@@ -1,35 +1,21 @@
 import os
 import pandas as pd
-from fastapi import FastAPI, File, HTTPException, Request, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from service.db_api import db_api
 from service.analysing import (count_topics, count_unigrams, draw_wordcloud,
                                text_print)
 from service.utils import doing_predictions
-from service.monitoring import get_blocks
-import datetime
-import platform
-import psutil
+import io
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./service/static"), name="static")
 templates = Jinja2Templates(directory="./service/templates")
 
-@app.get("/monitoring")
-async def monitoring(request: Request):
-    active_since = datetime.datetime.fromtimestamp(psutil.boot_time())
-    return templates.TemplateResponse("monitoring.html",
-                           {"request": request,
-                            'script_version':'1.0.0',
-                           'active_since':active_since,
-                           'days_active':(datetime.datetime.now() - active_since).days,
-                           'system':platform.system(),
-                           'release':platform.release(),
-                           'version':platform.version(),
-                           'blocks':get_blocks()})
-
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 async def root(request: Request):
@@ -46,11 +32,13 @@ async def upload(request: Request):
 @app.post("/prediction")
 async def create_pred(request: Request,
                       uploaded_file: UploadFile = File(...)):
-    db = db_api()
-    table = db.push_csv(uploaded_file=uploaded_file)
+    csv_name = uploaded_file.filename
+    assert csv_name
+    csv = io.StringIO(uploaded_file.file.read().decode())
+    df = pd.read_csv(csv)
 
     try:
-        y_pred, num = doing_predictions(table)
+        y_pred, num = doing_predictions(df, csv_name)
     except NameError as exception:
         print(exception)
         raise HTTPException(status_code=500, detail=str(exception))
@@ -67,7 +55,7 @@ async def create_pred(request: Request,
                                       {"request": request,
                                        "pred": y_pred,
                                        "num": num,
-                                       "csv_name": table,
+                                       "csv_name": csv_name,
                                        "picture": picture})
 
 
@@ -76,7 +64,8 @@ async def analysing(request: Request):
     params = dict(request.query_params)
     csv_name = params['name']
     db = db_api()
-    df = db.get_df(table=f'{csv_name}_preprocessed')
+    df = db.get_df(table='preprocessed_texts')
+    df.rename(columns={'texts': 'text'}, inplace=True)
     news = text_print(df=df, i=params['pr'])
     wcloud = draw_wordcloud(df=df, i=params['pr'], photo=False)
     unigrams = count_unigrams(df=df, i=params['pr'])

@@ -21,6 +21,8 @@ python-multipart = "^0.0.6"
 seaborn = "^0.12.2"
 prometheus-fastapi-instrumentator = "^6.0.0"
 mpld3 = "^0.5.9"
+psycopg2-binary = "^2.9.6"
+sqlalchemy = "^2.0.17"
 
 [build-system]
 requires = ["poetry-core"]

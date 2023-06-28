@@ -12,10 +12,7 @@ clf, label_encoder = load_model(
 )
 
 
-def doing_predictions(table: str):
-    db = db_api()
-    df = db.get_df(table=table)
-    
+def doing_predictions(df: pd.DataFrame, csv_name: str):
     df["date"] = pd.to_datetime(df["date"], format="%Y/%m/%d")
     lemmatization(df)
     make_date_features(df)
@@ -26,7 +23,10 @@ def doing_predictions(table: str):
 
     encoder(df, label_encoder)
     y_pred = np.ravel(clf.predict(df[COLUMNS]))
-    db.push_df(df=df, table=f'{table}_preprocessed')
+    db = db_api()
+    df['csv_name'] = csv_name
+    df.rename(columns={'text': 'texts'}, inplace=True)
+    db.push_df(df=df, table='preprocessed_texts', csv_name=csv_name)
 
     dict_topic = dict(zip(np.arange(0, len(label_encoder.classes_)), label_encoder.classes_))
     preds = [dict_topic[i] for i in y_pred]
