@@ -43,6 +43,6 @@ class db_api(object):
         return table
     
     @__db_action('get')
-    def get_df(self, conn, table):
-        df = pd.read_sql_query(f"SELECT * FROM {table}", self.DB)
+    def get_df(self, conn, table, csv_name):
+        df = pd.read_sql_query(f"""SELECT * FROM {table} WHERE csv_name = '{csv_name}';""", self.DB)
         return df

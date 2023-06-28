@@ -11,6 +11,9 @@ ADD ./final_pipeline /home/service/final_pipeline
 ADD ./service /home/service/service
 ADD ./Makefile /home/service
 
+ENV PROMETHEUS_MULTIPROC_DIR=/metrics
+RUN mkdir -p /metrics
+
 ARG POETRY_HOME=/opt/poetry
 ENV PATH=${POETRY_HOME}/bin:${PATH}
 RUN curl -sSL https://install.python-poetry.org | python3 -
