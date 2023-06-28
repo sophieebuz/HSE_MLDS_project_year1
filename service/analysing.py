@@ -11,8 +11,7 @@ from wordcloud import WordCloud
 matplotlib.use('Agg')
 
 
-def text_print(path: str, i: str):
-    df = pd.read_csv(f"./{path}")
+def text_print(df, i: str):
     index = int(i)
     news = {
         'text': df['text'][index],
@@ -23,7 +22,7 @@ def text_print(path: str, i: str):
     return news
 
 
-def draw_wordcloud(path: str, i: str, photo: bool, name=None):
+def draw_wordcloud(df, i: str, photo: bool, name=None):
     wordcloud = WordCloud(
             width=1280,
             height=720,
@@ -33,8 +32,6 @@ def draw_wordcloud(path: str, i: str, photo: bool, name=None):
             scale=3,
             random_state=123,
             colormap='twilight')
-
-    df = pd.read_csv(path)
     index = int(i)
     data = df['text_str'][index]
     wordcloud.generate(data)
@@ -56,8 +53,7 @@ def generate_ngrams(text, n_gram=1):
     return [' '.join(ngram) for ngram in ngrams]
 
 
-def count_unigrams(path: str, i: str):
-    df = pd.read_csv(path)
+def count_unigrams(df, i: str):
     index = int(i)
     data = df['text_str'][index]
 
