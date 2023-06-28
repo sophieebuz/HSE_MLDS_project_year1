@@ -9,24 +9,37 @@ from service.analysing import (count_topics, count_unigrams, draw_wordcloud,
 from service.utils import doing_predictions
 import io
 from prometheus_fastapi_instrumentator import Instrumentator
+from fastapi.middleware.cors import CORSMiddleware
+from service.metrics import REQUESTS, REQUESTS_LATENCY
+from prometheus_client import generate_latest, multiprocess, CollectorRegistry, CONTENT_TYPE_LATEST
 
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./service/static"), name="static")
 templates = Jinja2Templates(directory="./service/templates")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 async def root(request: Request):
+    REQUESTS.labels(route="root").inc()
     return templates.TemplateResponse('main_page.html',
                                       {"request": request})
 
 
 @app.get("/upload_file")
 async def upload(request: Request):
-    return templates.TemplateResponse('upload_file.html',
-                                      {"request": request})
+    with REQUESTS_LATENCY.labels(route="upload_file").time():
+        REQUESTS.labels(route="upload_file").inc()
+        return templates.TemplateResponse('upload_file.html',
+                                        {"request": request})
 
 
 @app.post("/prediction")
@@ -64,7 +77,7 @@ async def analysing(request: Request):
     params = dict(request.query_params)
     csv_name = params['name']
     db = db_api()
-    df = db.get_df(table='preprocessed_texts')
+    df = db.get_df(table='preprocessed_texts', csv_name=csv_name)
     df.rename(columns={'texts': 'text'}, inplace=True)
     news = text_print(df=df, i=params['pr'])
     wcloud = draw_wordcloud(df=df, i=params['pr'], photo=False)

@@ -55,9 +55,13 @@ services:
     container_name: grafana
     ports:
       - 3000:3000
+    depends_on:
+      - prometheus
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./datasource.yml:/etc/grafana/provisioning/datasource.yml
+      - ./datasource.yml:/etc/grafana/provisioning/datasources/sample.yaml
+      - ./dashboard.yml:/etc/grafana/provisioning/dashboards/sample.yaml
+      - ./grafana_dashboard/fastapi-dashboard.json:/grafana/public/dashboards/fastapi-dashboard.json
     # logging:
     #   driver: loki
     #   options:
