@@ -21,7 +21,7 @@ def doing_predictions(df: pd.DataFrame, csv_name: str):
         if required_column not in df.columns:
             raise NameError(f"Несоответствие формата таблицы, нет колонки {required_column}")
 
-    # encoder(df, label_encoder)
+    encoder(df, label_encoder)
     y_pred = np.ravel(clf.predict(df[COLUMNS]))
     db = db_api()
     df['csv_name'] = csv_name
